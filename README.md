@@ -5,7 +5,7 @@ basic-AI course run for the Malaysian public, primarily in Sabah.
 
 - Live site: <https://kursusaipercuma.site/>
 - Trainer profile: <https://kursusaipercuma.site/trainer.html>
-- Repo: `edthix/kursusaipercuma` (public)
+- Repo: `mindbravosb/kursusaipercuma` (public, `mindbravosb` organization)
 - Trainer: Ts.Gs. Mahadthir Hj. Asbollah, Kota Kinabalu, Sabah
 
 ## What the site is
@@ -45,7 +45,15 @@ certifications.
   image lightbox, keyboard/ESC close).
 - No framework, no bundler, no package manager, no server-side code.
 - Analytics: Google Analytics (`gtag.js`, measurement ID `G-R5Q51EJG7B`) on both pages.
-- All imagery served from the repo: `img/` (4 activity photos) and `trainer-profile.png`.
+- All imagery is self-hosted in the repo — there is no third-party image CDN:
+
+  | Path | Contents |
+  | --- | --- |
+  | `img/` | 4 activity photos embedded in the agency list |
+  | `img/gallery/` | 16 carousel photos (jpg) referenced by the gallery sections |
+  | `img/media/` | 8 press-clipping scans opened by the Liputan Media lightbox |
+  | `img/og-image.jpg` | social preview image (`og:image` / `twitter:image` / JSON-LD `logo`) |
+  | `trainer-profile.png` | trainer portrait on `trainer.html` |
 
 ## Deployment
 
@@ -59,10 +67,18 @@ Published by **GitHub Pages** directly from `main`:
 | Custom 404 | no |
 
 DNS is Namecheap; the apex `kursusaipercuma.site` points at GitHub's four Pages A records
-(`185.199.108.109/110/111.153`) and `www` is a CNAME to `edthix.github.io`.
+(`185.199.108.109/110/111.153`) and `www` is a CNAME to `mindbravosb.github.io` (the org's
+Pages host — a `www` CNAME must point at the owner account that holds the repo).
 
 **Publishing an edit:** commit to `main` (or open a PR). Pages rebuilds automatically; changes
 appear within a minute or two. There is no manual deploy step.
+
+### Changing owner
+
+The repo lives in the `mindbravosb` organization. If it is ever transferred again, three things
+must move with it: the `www` CNAME in DNS (must point at `<new-owner>.github.io`), the Pages
+custom-domain setting, and the TLS certificate (GitHub re-issues it; until then the site serves
+HTTP and shows a `*.github.io` certificate mismatch on the apex).
 
 > The repo must stay **public**. On a free GitHub plan a private repo disables Pages, and a
 > disabled Pages site cannot provision a certificate for the custom domain — the site then
@@ -86,8 +102,9 @@ though relative asset paths resolve best through the server above.
 - **Agency list / stats / media items** — add a card block in the relevant section of
   `index.html`; the "10+" and "1,000+" figures in the hero/why-it-matters sections are plain
   text and must be bumped by hand when they change.
-- **Photos** — drop the file in `img/` and add an `<img>` to the matching agency's gallery
-  section.
+- **Photos** — gallery cars use files in `img/gallery/`; add the file and an `<img>` to the
+  matching agency's carousel (`<div class="carousel-slide">`). Press clippings for the Liputan
+  Media lightbox go in `img/media/` and are referenced from the card's `openLightbox('...')`.
 - **SEO/social metadata** — each page has its own `title`, `description`, `keywords`,
   `og:*`/`twitter:*` and JSON-LD blocks near the top; canonical URLs are
   `https://kursusaipercuma.site/` and `https://kursusaipercuma.site/trainer.html`.
